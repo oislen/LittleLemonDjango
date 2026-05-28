@@ -10,7 +10,7 @@ ENV PYTHONDONTWRITEBYTECODE=1
 # install required software and programmes for development environment
 RUN apt-get update
 RUN apt-get install -y apt-utils vim curl wget unzip tree htop adduser
-RUN apt-get install -y apt-utils imagemagick==8:7.1.1.43+dfsg1-1+deb13u9 krb5-multidev==1.21.3-5+deb13u1 libmagickcore-7-arch-config==8:7.1.1.43+dfsg1-1+deb13u9 libunbound8==1.22.0-2+deb13u3 linux-libc-dev==6.12.90-2
+RUN apt-get install -y apt-utils imagemagick=8:7.1.1.43+dfsg1-1+deb13u9 krb5-multidev=1.21.3-5+deb13u1 libmagickcore-7-arch-config=8:7.1.1.43+dfsg1-1+deb13u9 libunbound8=1.22.0-2+deb13u3 linux-libc-dev=6.12.90-2
 
 # set up home environment
 RUN adduser ${user}
