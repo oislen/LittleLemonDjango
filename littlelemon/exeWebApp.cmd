@@ -5,4 +5,4 @@ call exeLoadData.cmd
 :: run django app test
 call exeUnitTests.cmd
 :: run web-app
-call python manage.py runserver
+call uv run python manage.py runserver
