@@ -10,7 +10,6 @@ ENV PYTHONDONTWRITEBYTECODE=1
 # install required software and programmes for development environment
 RUN apt-get update
 RUN apt-get install -y apt-utils vim curl wget unzip tree htop adduser
-RUN apt-get install -y libtiff-dev=4.7.0-3+deb13u1 libtiff6=4.7.0-3+deb13u1 libtiffxx6=4.7.0-3+deb13u1
 
 # set up home environment
 RUN adduser ${user}
