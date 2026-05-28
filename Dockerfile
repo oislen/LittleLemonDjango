@@ -18,6 +18,8 @@ RUN mkdir -p /home/${user} && chown -R ${user}: /home/${user}
 # copy little lemon repo
 COPY . /home/${user}/LittleLemonDjango
 
+# set working directory for django app
+WORKDIR /home/${user}/LittleLemonDjango
 # install required python packages
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 RUN uv sync
