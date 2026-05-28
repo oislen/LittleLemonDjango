@@ -22,35 +22,6 @@ For a more detailed account of each column in the dataset see the data dictionar
 
 ## Running the Application (Windows)
 
-### Anaconda
-
-Create a local conda environment for the Little Lemon Web app using [anaconda](https://www.anaconda.com/):
-
-```
-conda create --name littlelemon python=3.12 --yes
-conda activate littlelemon
-pip install -r requirements.txt
-```
-
-Initialise the Little Lemon Web app sqlite database with preconfigured data and a super user.
-
-```
-python manage.py makemigrations restaurant
-python manage.py migrate
-python manage.py runscript restaurant.import_data
-```
-
-Run the django tests and start the Little Lemon Web app using the following commands and the local conda environment:
-
-```
-python manage.py test
-python manage.py runserver
-```
-
-Once the web app is running, navigate to localhost:8000 in your preferred browser
-
-* http://localhost:8000
-
 ### Docker
 
 The latest version of the Little Lemon Web App can be found as a [docker](https://www.docker.com/) image on dockerhub here:

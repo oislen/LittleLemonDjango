@@ -1,2 +1,2 @@
 :: run django app test
-call python manage.py test
+call uv run python manage.py test
