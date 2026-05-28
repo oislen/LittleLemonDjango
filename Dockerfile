@@ -26,11 +26,11 @@ RUN uv cache clear
 # set working directory for django app
 WORKDIR /home/${user}/LittleLemonDjango/littlelemon
 # make migrations and migrate data from csv files
-RUN python manage.py makemigrations restaurant
-RUN python manage.py migrate
-RUN python manage.py runscript restaurant.import_data
+RUN uv run python manage.py makemigrations restaurant
+RUN uv run python manage.py migrate
+RUN uv run python manage.py runscript restaurant.import_data
 # run django app tests
-RUN python manage.py test
+RUN uv run python manage.py test
 
 EXPOSE 8000
 CMD  ["uv", "run", "python", "manage.py", "runserver", "0.0.0.0:8000"]
