@@ -15,3 +15,6 @@ dependencies = [
     "numpy==2.2.6",
     "pandas==2.2.3",
 ]
+
+[tool.uv]
+exclude-newer = "7 days"
