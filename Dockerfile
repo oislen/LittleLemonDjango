@@ -20,7 +20,9 @@ RUN mkdir -p /home/${user} && chown -R ${user}: /home/${user}
 COPY . /home/${user}/LittleLemonDjango
 
 # install required python packages
-RUN python -m pip install -v -r /home/${user}/LittleLemonDjango/requirements.txt
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+RUN uv sync
+RUN uv cache clear
 
 # set working directory for django app
 WORKDIR /home/${user}/LittleLemonDjango/littlelemon
@@ -32,4 +34,4 @@ RUN python manage.py runscript restaurant.import_data
 RUN python manage.py test
 
 EXPOSE 8000
-CMD  ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD  ["uv", "run", "python", "manage.py", "runserver", "0.0.0.0:8000"]
