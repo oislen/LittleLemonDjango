@@ -12,8 +12,11 @@ dependencies = [
     "djangorestframework-simplejwt==5.5.1",
     "djangorestframework-xml==2.0.0",
     "djoser==2.3.1",
+    "fastmcp>=3.3.1",
+    "mcp>=1.27.1",
     "numpy==2.2.6",
     "pandas==2.2.3",
+    "requests>=2.34.2",
 ]
 
 [tool.uv]
