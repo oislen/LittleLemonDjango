@@ -1,0 +1,18 @@
+name: Little Lemon Django
+services:
+    littlelemondjango:
+        container_name: lld
+        networks:
+            - littlelemon
+        ports:
+            - 8000:8000
+        deploy:
+            resources:
+                limits:
+                    memory: 6GB
+        shm_size: 512m
+        image: oislen/littlelemondjango:latest
+networks:
+    littlelemon:
+        external: true
+        name: littlelemon
