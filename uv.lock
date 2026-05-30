@@ -3,7 +3,7 @@ revision = 3
 requires-python = "==3.12.*"
 
 [options]
-exclude-newer = "2026-05-22T15:08:39.4146783Z"
+exclude-newer = "2026-05-23T14:23:31.7302397Z"
 exclude-newer-span = "P7D"
 
 [[package]]
@@ -640,6 +640,7 @@ dependencies = [
     { name = "numpy" },
     { name = "pandas" },
     { name = "requests" },
+    { name = "uvicorn" },
 ]
 
 [package.metadata]
@@ -651,11 +652,12 @@ requires-dist = [
     { name = "djangorestframework-simplejwt", specifier = "==5.5.1" },
     { name = "djangorestframework-xml", specifier = "==2.0.0" },
     { name = "djoser", specifier = "==2.3.1" },
-    { name = "fastmcp", specifier = ">=3.3.1" },
-    { name = "mcp", specifier = ">=1.27.1" },
+    { name = "fastmcp", specifier = "==3.3.1" },
+    { name = "mcp", specifier = "==1.27.1" },
     { name = "numpy", specifier = "==2.2.6" },
     { name = "pandas", specifier = "==2.2.3" },
-    { name = "requests", specifier = ">=2.34.2" },
+    { name = "requests", specifier = "==2.34.2" },
+    { name = "uvicorn", specifier = "==0.47.0" },
 ]
 
 [[package]]

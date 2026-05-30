@@ -10,3 +10,4 @@ numpy==2.2.6
 mcp==1.27.1
 fastmcp==3.3.1
 requests==2.34.2
+uvicorn==0.47.0
