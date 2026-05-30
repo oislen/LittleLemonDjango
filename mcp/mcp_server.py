@@ -40,4 +40,4 @@ def get_menu_item_details(menu_item_id: int) -> dict:
         return {"error": f"Failed to fetch menu item {menu_item_id}: {str(e)}"}
 
 if __name__ == "__main__":
-    mcp.run()
+    mcp.run(transport="sse", host="0.0.0.0", port=8585)
