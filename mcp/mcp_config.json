@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "django-restaurant": {
+      "url": "http://localhost:8585/sse",
+      "msg_url": "http://localhost:8585/messages/"
+    }
+  }
+}
