@@ -1,3 +1,4 @@
+# uv run fastmcp dev inspector mcp_server.py
 import os
 import requests
 from fastmcp import FastMCP
