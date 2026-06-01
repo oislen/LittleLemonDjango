@@ -3,12 +3,19 @@
 ## Overview
 
 A web app for the Little Lemon restaurant as per the Meta Backend Developer Course. The user facing web app contains an about page introducing the Little Lemon restaurant, a series of menu item pages describing the dishes available to order, and a booking page for reserving a table at the restaurant.
+* http://localhost:8000/
 
 ![Home Page](report/LittleLemon_HomePage.png)
 
 The web app also includes a REST API for interacting with backend data model. These include the user facing menu items and booking pages described above. The backend api also includes administrative endpoints for controlling users, orders and deliveries.
+* http://localhost:8000/api/
 
 ![Rest API](report/API_HomePage.png)
+
+The built-in django admin page is available at for tokens, authentication and data model operations.
+* http://localhost:8000/admin/
+
+![Admin Page](report/LittleLemon_AdminPage.png)
 
 ## Data Model
 
