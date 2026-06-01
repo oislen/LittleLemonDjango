@@ -34,5 +34,5 @@ RUN cd littlelemon && \
     uv run python manage.py runscript restaurant.import_data && \
     uv run python manage.py test
 
-EXPOSE 8000
+EXPOSE 8000 8585
 CMD ["uv", "run", "python", "littlelemon/manage.py", "runserver", "0.0.0.0:8000"]
