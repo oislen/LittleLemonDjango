@@ -1,18 +1,38 @@
 name: Little Lemon Django
+
 services:
-    littlelemondjango:
-        container_name: lld
-        networks:
-            - littlelemon
-        ports:
-            - 8000:8000
-        deploy:
-            resources:
-                limits:
-                    memory: 6GB
-        shm_size: 512m
-        image: oislen/littlelemondjango:latest
+  # 1. Main Django Web Application Engine
+  littlelemondjango:
+    container_name: lld
+    image: oislen/littlelemondjango:latest
+    networks:
+      - littlelemon
+    ports:
+      - "8000:8000"
+    working_dir: /home/user/LittleLemonDjango/littlelemon
+    command: ["uv", "run", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+    deploy:
+      resources:
+        limits:
+          memory: 6GB
+    shm_size: 512m
+
+  # 2. Parallel Model Context Protocol (MCP) Server Container
+  mcp-server:
+    container_name: llm
+    image: oislen/littlelemondjango:latest
+    networks:
+      - littlelemon
+    ports:
+      - "8585:8585"
+    working_dir: /home/user/LittleLemonDjango/mcp
+    command: ["uv", "run", "python", "mcp_server.py"]
+    environment:
+      - DJANGO_API_URL=http://littlelemondjango:8000/api
+    depends_on:
+      - littlelemondjango
+
 networks:
-    littlelemon:
-        external: true
-        name: littlelemon
+  littlelemon:
+    external: true
+    name: littlelemon
