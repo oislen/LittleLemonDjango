@@ -23,3 +23,28 @@ dependencies = [
 
 [tool.uv]
 exclude-newer = "7 days"
+
+[tool.ruff]
+# Target Python version
+target-version = "py310"
+# Set the maximum line length (matching Black's default)
+line-length = 88
+
+[tool.ruff.lint]
+# Enable specific rule sets
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes (basic syntax/runtime errors)
+    "I",   # isort (import sorting)
+    "B",   # flake8-bugbear (common design flaws)
+    "C4",  # flake8-comprehensions (better list/dict comprehensions)
+    "UP",  # pyupgrade (upgrades syntax to newer Python versions)
+]
+
+# Rules you want to explicitly ignore
+ignore = []
+
+[tool.ruff.format]
+# Enable preview mode if you want the absolute latest formatting features
+preview = false
