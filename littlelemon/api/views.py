@@ -1,30 +1,43 @@
-from rest_framework.viewsets import ModelViewSet
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django.contrib.auth.models import Group, User
-from restaurant.models import Category, MenuItem, Order, Cart, Booking, OrderItem
-from .serializers import CategorySerializer, MenuItemSerializer, OrderSerializer, CartSerializer, BookingSerializer, OrderItemSerializer, UserSerializer
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
+from restaurant.models import Booking, Category, MenuItem, Order
+
+from .serializers import (
+    BookingSerializer,
+    CategorySerializer,
+    MenuItemSerializer,
+    OrderSerializer,
+    UserSerializer,
+)
+
 
 class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
+
 class MenuItemViewSet(ModelViewSet):
     queryset = MenuItem.objects.all()
     serializer_class = MenuItemSerializer
+
 
 class BookingViewSet(ModelViewSet):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
 
+
 class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+
 class CustomerOrderViewSet(ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+
 
 class DeliveryCrewOrderView(APIView):
     permission_classes = [IsAuthenticated]
@@ -38,19 +51,21 @@ class DeliveryCrewOrderView(APIView):
 
     def patch(self, request, order_id):
         order = Order.objects.get(id=order_id, delivery_crew=request.user)
-        order.status = True  
+        order.status = True
         order.save()
         return Response({"message": "Order marked as delivered"})
+
 
 class AssignUserToManagerGroup(APIView):
     permission_classes = [IsAdminUser]
 
     def post(self, request):
-        user_id = request.data.get('user_id')
+        user_id = request.data.get("user_id")
         user = User.objects.get(id=user_id)
         manager_group, _ = Group.objects.get_or_create(name="Manager")
         manager_group.user_set.add(user)
         return Response({"message": "User assigned to Manager group"})
+
 
 class AssignToDeliveryCrew(APIView):
     permission_classes = [IsAuthenticated]
