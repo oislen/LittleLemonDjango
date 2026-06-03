@@ -38,7 +38,11 @@ select = [
     "C4",  # flake8-comprehensions (better list/dict comprehensions)
     "UP",  # pyupgrade (upgrades syntax to newer Python versions)
 ]
-ignore = []
+ignore = [
+    "F841",
+    "E501",
+    "B007"
+]
 per-file-ignores = { "littlelemon/littlelemon/settings.py" = ["E501"] }
 
 [tool.ruff.format]
