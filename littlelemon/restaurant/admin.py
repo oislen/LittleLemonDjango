@@ -1,10 +1,6 @@
 from django.contrib import admin
-from .models import Booking
-from .models import MenuItem
-from .models import Category
-from .models import Cart
-from .models import Order
-from .models import OrderItem
+
+from .models import Booking, Cart, Category, MenuItem, Order, OrderItem
 
 # register models
 admin.site.register(MenuItem)

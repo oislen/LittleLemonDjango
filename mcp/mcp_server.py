@@ -1,8 +1,9 @@
 # uv run fastmcp dev inspector mcp_server.py
 # uv run ollmcp --mcp-server-url http://localhost:8585/sse
 import os
+from typing import Any
+
 import requests
-from typing import Optional, Dict, Any, List
 from fastmcp import FastMCP
 
 # Initialize FastMCP
@@ -12,14 +13,15 @@ mcp = FastMCP("Django-API-Reader")
 # Note: In docker-compose, change this default to "http://web:8000/api" if your django service is named "web"
 DJANGO_API_URL = os.getenv("DJANGO_API_URL", "http://127.0.0.1:8000/api")
 
-def get_headers() -> Dict[str, str]:
-    return {
-        "Content-Type": "application/json"
-    }
+
+def get_headers() -> dict[str, str]:
+    return {"Content-Type": "application/json"}
+
 
 # =====================================================================
 # --- MCP RESOURCES (Read-only data endpoints for bulk loading) -------
 # =====================================================================
+
 
 @mcp.resource("django://categories/list")
 def list_categories() -> str:
@@ -31,6 +33,7 @@ def list_categories() -> str:
     except requests.RequestException as e:
         return f"Error connecting to Django backend categories endpoint: {str(e)}"
 
+
 @mcp.resource("django://menu-items/list")
 def list_menu_items() -> str:
     """Fetches a full list of menu items from the Django REST API."""
@@ -40,6 +43,7 @@ def list_menu_items() -> str:
         return response.text
     except requests.RequestException as e:
         return f"Error connecting to Django backend menu items endpoint: {str(e)}"
+
 
 @mcp.resource("django://bookings/list")
 def list_bookings() -> str:
@@ -51,6 +55,7 @@ def list_bookings() -> str:
     except requests.RequestException as e:
         return f"Error connecting to Django backend bookings endpoint: {str(e)}"
 
+
 @mcp.resource("django://orders/list")
 def list_orders() -> str:
     """Fetches a list of all customer orders from the Django REST API."""
@@ -60,6 +65,7 @@ def list_orders() -> str:
         return response.text
     except requests.RequestException as e:
         return f"Error connecting to Django backend orders endpoint: {str(e)}"
+
 
 @mcp.resource("django://users/list")
 def list_users() -> str:
@@ -76,9 +82,10 @@ def list_users() -> str:
 # --- MCP TOOLS (Parameterized read or mutation action endpoints) -----
 # =====================================================================
 
+
 # --- CATEGORY TOOLS ---
 @mcp.tool()
-def get_categories() -> List[Dict[str, Any]]:
+def get_categories() -> list[dict[str, Any]]:
     """Retrieves food categories."""
     try:
         response = requests.get(f"{DJANGO_API_URL}/categories/", headers=get_headers())
@@ -87,22 +94,28 @@ def get_categories() -> List[Dict[str, Any]]:
     except requests.RequestException as e:
         return {"error": f"Failed to fetch categories: {str(e)}"}
 
+
 @mcp.tool()
-def get_category_details(category_id: int) -> Dict[str, Any]:
+def get_category_details(category_id: int) -> dict[str, Any]:
     """Retrieves specific details about a food category by ID. The IDs are indexed from 1 onwards."""
     try:
-        response = requests.get(f"{DJANGO_API_URL}/categories/{category_id}/", headers=get_headers())
+        response = requests.get(
+            f"{DJANGO_API_URL}/categories/{category_id}/", headers=get_headers()
+        )
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:
         return {"error": f"Failed to fetch category {category_id}: {str(e)}"}
 
+
 @mcp.tool()
-def create_category(name: str, slug: str) -> Dict[str, Any]:
+def create_category(name: str, slug: str) -> dict[str, Any]:
     """Creates a new food category in the system."""
     try:
         payload = {"name": name, "slug": slug}
-        response = requests.post(f"{DJANGO_API_URL}/categories/", json=payload, headers=get_headers())
+        response = requests.post(
+            f"{DJANGO_API_URL}/categories/", json=payload, headers=get_headers()
+        )
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:
@@ -111,7 +124,7 @@ def create_category(name: str, slug: str) -> Dict[str, Any]:
 
 # --- MENU ITEM TOOLS ---
 @mcp.tool()
-def get_menu() -> List[Dict[str, Any]]:
+def get_menu() -> list[dict[str, Any]]:
     """Retrieves the menu from the Django backend."""
     try:
         response = requests.get(f"{DJANGO_API_URL}/menu-items/", headers=get_headers())
@@ -120,22 +133,35 @@ def get_menu() -> List[Dict[str, Any]]:
     except requests.RequestException as e:
         return {"error": f"Failed to fetch menu: {str(e)}"}
 
+
 @mcp.tool()
-def get_menu_item_details(menu_item_id: int) -> Dict[str, Any]:
+def get_menu_item_details(menu_item_id: int) -> dict[str, Any]:
     """Retrieves detailed information about a specific menu item by ID from the Django backend. The IDs are indexed from 1 onwards."""
     try:
-        response = requests.get(f"{DJANGO_API_URL}/menu-items/{menu_item_id}/", headers=get_headers())
+        response = requests.get(
+            f"{DJANGO_API_URL}/menu-items/{menu_item_id}/", headers=get_headers()
+        )
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:
         return {"error": f"Failed to fetch menu item {menu_item_id}: {str(e)}"}
 
+
 @mcp.tool()
-def create_menu_item(title: str, price: float, category_id: int, featured: bool = False) -> Dict[str, Any]:
+def create_menu_item(
+    title: str, price: float, category_id: int, featured: bool = False
+) -> dict[str, Any]:
     """Creates a new menu item in the database system."""
     try:
-        payload = {"title": title, "price": price, "category": category_id, "featured": featured}
-        response = requests.post(f"{DJANGO_API_URL}/menu-items/", json=payload, headers=get_headers())
+        payload = {
+            "title": title,
+            "price": price,
+            "category": category_id,
+            "featured": featured,
+        }
+        response = requests.post(
+            f"{DJANGO_API_URL}/menu-items/", json=payload, headers=get_headers()
+        )
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:
@@ -144,7 +170,7 @@ def create_menu_item(title: str, price: float, category_id: int, featured: bool 
 
 # --- BOOKING TOOLS ---
 @mcp.tool()
-def get_bookings() -> List[Dict[str, Any]]:
+def get_bookings() -> list[dict[str, Any]]:
     """Retrieves all reservation bookings."""
     try:
         response = requests.get(f"{DJANGO_API_URL}/bookings/", headers=get_headers())
@@ -153,18 +179,24 @@ def get_bookings() -> List[Dict[str, Any]]:
     except requests.RequestException as e:
         return {"error": f"Failed to fetch bookings: {str(e)}"}
 
+
 @mcp.tool()
-def get_booking_details(booking_id: int) -> Dict[str, Any]:
+def get_booking_details(booking_id: int) -> dict[str, Any]:
     """Retrieves complete details of an individual reservation booking by ID. The IDs are indexed from 1 onwards."""
     try:
-        response = requests.get(f"{DJANGO_API_URL}/bookings/{booking_id}/", headers=get_headers())
+        response = requests.get(
+            f"{DJANGO_API_URL}/bookings/{booking_id}/", headers=get_headers()
+        )
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:
         return {"error": f"Failed to fetch booking {booking_id}: {str(e)}"}
 
+
 @mcp.tool()
-def create_booking(first_name: str, reservation_date: str, reservation_slot: int) -> Dict[str, Any]:
+def create_booking(
+    first_name: str, reservation_date: str, reservation_slot: int
+) -> dict[str, Any]:
     """
     Creates a restaurant table booking.
     reservation_date should follow the format 'YYYY-MM-DD'.
@@ -173,13 +205,16 @@ def create_booking(first_name: str, reservation_date: str, reservation_slot: int
         payload = {
             "first_name": first_name,
             "reservation_date": reservation_date,
-            "reservation_slot": reservation_slot
+            "reservation_slot": reservation_slot,
         }
-        response = requests.post(f"{DJANGO_API_URL}/bookings/", json=payload, headers=get_headers())
+        response = requests.post(
+            f"{DJANGO_API_URL}/bookings/", json=payload, headers=get_headers()
+        )
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:
         return {"error": f"Failed to establish booking: {str(e)}"}
+
 
 if __name__ == "__main__":
     mcp.run(transport="sse", host="0.0.0.0", port=8585)
