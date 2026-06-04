@@ -1,0 +1,37 @@
+{
+  "name": "Little Lemon Django",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": ".."
+  },
+"runArgs": [
+    "--name", "lld",
+    "--net", "littlelemon",
+    "--memory", "6GB",
+    "--shm-size=512m"
+  ],
+  "forwardPorts": [8000],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.debugpy",
+        "charliermarsh.ruff",
+        "ms-toolsai.jupyter",
+        "quarto.quarto"
+      ],
+      "settings": {
+        "python.languageServer": "Pylance",
+        "editor.formatOnSave": true,
+        "[python]": {
+          "editor.defaultFormatter": "charliermarsh.ruff",
+          "editor.codeActionsOnSave": {
+            "source.fixAll": "always",
+            "source.organizeImports": "always"
+          }
+        }
+      }
+    }
+  }
+}
