@@ -378,9 +378,7 @@ class CartSerializerTest(TestCase):
 class PermissionTest(TestCase):
     def setUp(self):
         self.factory = RequestFactory()
-        self.user = User.objects.create_user(
-            username="member@email.com", password="pw"
-        )
+        self.user = User.objects.create_user(username="member@email.com", password="pw")
 
     def _request_for(self, user):
         request = self.factory.get("/")
@@ -392,9 +390,7 @@ class PermissionTest(TestCase):
         self.assertTrue(IsManager().has_permission(self._request_for(self.user), None))
 
     def test_is_manager_denies_non_member(self):
-        self.assertFalse(
-            IsManager().has_permission(self._request_for(self.user), None)
-        )
+        self.assertFalse(IsManager().has_permission(self._request_for(self.user), None))
 
     def test_is_delivery_crew_grants_group_member(self):
         self.user.groups.add(Group.objects.create(name="Delivery Crew"))
@@ -572,18 +568,14 @@ class DeliveryCrewOrderViewTest(TestCase):
 
     def test_patch_marks_own_order_delivered(self):
         self.client.login(username="crew@email.com", password="pw")
-        response = self.client.patch(
-            f"/api/delivery-orders/{self.pending_order.pk}/"
-        )
+        response = self.client.patch(f"/api/delivery-orders/{self.pending_order.pk}/")
         self.assertEqual(response.status_code, 200)
         self.pending_order.refresh_from_db()
         self.assertEqual(self.pending_order.status, "delivered")
 
     def test_patch_order_assigned_to_other_returns_404(self):
         self.client.login(username="crew@email.com", password="pw")
-        response = self.client.patch(
-            f"/api/delivery-orders/{self.other_order.pk}/"
-        )
+        response = self.client.patch(f"/api/delivery-orders/{self.other_order.pk}/")
         self.assertEqual(response.status_code, 404)
         self.other_order.refresh_from_db()
         self.assertEqual(self.other_order.status, "pending")

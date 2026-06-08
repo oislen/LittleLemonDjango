@@ -53,9 +53,7 @@ class DeliveryCrewOrderView(APIView):
 
     def patch(self, request, order_id):
         try:
-            order = Order.objects.get(
-                order_id=order_id, delivery_username=request.user
-            )
+            order = Order.objects.get(order_id=order_id, delivery_username=request.user)
         except Order.DoesNotExist:
             return Response({"error": "Order not found"}, status=404)
         order.status = "delivered"
