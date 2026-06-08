@@ -28,4 +28,9 @@ urlpatterns = [
         name="assign-delivery-crew",
     ),
     path("delivery-orders/", DeliveryCrewOrderView.as_view(), name="delivery-orders"),
+    path(
+        "delivery-orders/<int:order_id>/",
+        DeliveryCrewOrderView.as_view(),
+        name="delivery-order-detail",
+    ),
 ]
