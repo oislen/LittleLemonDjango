@@ -130,7 +130,9 @@ docker pull oislen/littlelemondjango:latest
 The Little Lemon Web App can then be started using the following command and the docker image:
 
 ```
-docker compose up
+docker network create littlelemon
+docker run --name littlelemondjango --network littlelemon --publish 8000:8000 --workdir /home/user/LittleLemonDjango/littlelemon --memory 6g --shm-size 512m --rm oislen/littlelemondjango:latest uv run python manage.py runserver 0.0.0.0:8000
+docker run --name llm --network littlelemon --publish 8585:8585 --workdir /home/user/LittleLemonDjango/mcp --env DJANGO_API_URL=http://littlelemondjango:8000/api --rm oislen/littlelemondjango:latest uv run python mcp_server.py
 ```
 
 Once the web app is running, navigate to localhost:8000 in your preferred browser
