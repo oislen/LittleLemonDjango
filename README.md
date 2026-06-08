@@ -127,7 +127,7 @@ The image can be pulled from dockerhub using the following command:
 docker pull oislen/littlelemondjango:latest
 ```
 
-The Little Lemon Web App can then be started using the following command and the docker image:
+The Little Lemon Web App can then be started using the following commands and the docker image:
 
 ```
 docker network create littlelemon
@@ -139,7 +139,7 @@ Once the web app is running, navigate to localhost:8000 in your preferred browse
 
 * http://localhost:8000
 
-The Compose stack starts two services: the Django web app on port `8000` and the companion MCP server on port `8585`. To rebuild the image locally from source, run the `exeDocker.cmd` helper script.
+The above docker commands starts two services: the Django web app on port `8000` and the companion MCP server on port `8585`. To rebuild the image locally from source, run the `exeDocker.cmd` helper script.
 
 ### Local Development (uv)
 
