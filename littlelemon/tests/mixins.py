@@ -1,6 +1,6 @@
 from random import randint
 
-from restaurant.models import Booking, Category, MenuItem
+from restaurant.models import Booking, Category, MenuItem, Order
 
 BOOKINGS = {
     1: {
@@ -127,3 +127,60 @@ class SingleMenuItemMixin:
         )
         item.save()
         self.menu_item = item
+
+
+CATEGORIES = {
+    1: {"title": "Dessert"},
+    2: {"title": "Drinks"},
+    3: {"title": "Main"},
+}
+
+
+class CategoryMixin:
+    categories = CATEGORIES
+
+    def create_categories(self):
+        for idx in self.categories.keys():
+            category = Category.objects.create(title=self.categories[idx]["title"])
+            category.save()
+
+
+class SingleCategoryMixin:
+    category_data = CATEGORIES.get(1)
+
+    def create_category(self):
+        category = Category.objects.create(title=self.category_data.get("title"))
+        category.save()
+        self.category = category
+
+
+class OrderMixin:
+    """Creates a couple of orders for ``self.user``.
+
+    ``create_orders`` relies on ``self.user`` existing, so call it *after*
+    ``SetUpMixin.setUp`` (which creates and logs in the test user).
+    """
+
+    order_totals = ["10.00", "25.50"]
+
+    def create_orders(self):
+        self.orders = []
+        for total in self.order_totals:
+            order = Order.objects.create(
+                customer_username=self.user,
+                total=total,
+                date_time="2026-01-01 12:00:00",
+            )
+            order.save()
+            self.orders.append(order)
+
+
+class SingleOrderMixin:
+    def create_order(self):
+        order = Order.objects.create(
+            customer_username=self.user,
+            total="42.00",
+            date_time="2026-01-01 12:00:00",
+        )
+        order.save()
+        self.order = order
